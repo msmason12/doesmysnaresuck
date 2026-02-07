@@ -106,7 +106,7 @@ app.get("/", (req, res) => {
 <body>
   <div class="card">
     <h1>Does my snare sound like sh*t?</h1>
-    <p>Upload a WAV or MP3. I’ll judge it by LUFS.</p>
+    <p>Upload a WAV or MP3. Let's find out.</p>
 
     <form action="/analyze" method="post" enctype="multipart/form-data">
       <input type="file" name="file" accept=".wav,.mp3,audio/wav,audio/mpeg" required />
@@ -129,8 +129,8 @@ app.post("/analyze", upload.single("file"), async (req, res) => {
 
     const { lufs, lra, truePeak } = await analyzeLufs(req.file.buffer);
 
-    // Your rule: under -10 LUFS => YES (sucks). Change if you want opposite.
-    const isYes = lufs < -10;
+    // Your rule: under -14 LUFS => YES (sucks). Change if you want opposite.
+    const isYes = lufs < -14;
 
     const verdictText = isYes ? "YES — UR SNARE SUCKS" : "NO — UR SNARE ROCKS";
     const img = isYes ? YES_IMG : NO_IMG;
